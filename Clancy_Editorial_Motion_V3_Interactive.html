@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Clancy Motion V3</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+background:#090a0b;
+color:#ece7df;
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Inter",sans-serif;
+overflow-x:hidden;
+}
+canvas{
+position:fixed;
+inset:0;
+z-index:0;
+}
+body::before{
+content:"";
+position:fixed;
+inset:0;
+background:radial-gradient(circle at center, rgba(80,95,88,.08), transparent 60%);
+z-index:1;
+pointer-events:none;
+mix-blend-mode:screen;
+}
+nav{
+position:fixed;
+top:0;left:0;right:0;
+z-index:30;
+display:flex;
+justify-content:space-between;
+padding:28px 54px;
+background:rgba(8,9,10,.12);
+backdrop-filter:blur(16px);
+}
+.brand{
+font-size:12px;
+letter-spacing:.18em;
+color:#cfc7bb;
+}
+section{
+position:relative;
+z-index:3;
+padding:14vh 8vw;
+}
+.hero{
+height:130vh;
+display:flex;
+align-items:center;
+position:relative;
+}
+.hero-inner{
+max-width:920px;
+position:relative;
+z-index:5;
+}
+.eyebrow{
+font-size:12px;
+letter-spacing:.18em;
+color:#84958a;
+margin-bottom:26px;
+}
+h1{
+font-size:clamp(64px,9vw,138px);
+line-height:.88;
+font-weight:500;
+letter-spacing:-.06em;
+opacity:0;
+transform:translateY(30px);
+animation:fadeUp 1.4s forwards .2s;
+}
+@keyframes fadeUp{
+to{opacity:1;transform:translateY(0)}
+}
+.sub{
+margin-top:30px;
+font-size:22px;
+line-height:1.95;
+color:#b9b1a5;
+max-width:760px;
+opacity:0;
+transform:translateY(20px);
+animation:fadeUp 1.2s forwards .8s;
+}
+.cta{
+margin-top:48px;
+display:flex;
+gap:16px;
+opacity:0;
+animation:fadeUp 1.2s forwards 1.2s;
+}
+.btn{
+padding:15px 26px;
+border-radius:999px;
+text-decoration:none;
+color:#ece7df;
+border:1px solid rgba(255,255,255,.06);
+background:rgba(255,255,255,.03);
+backdrop-filter:blur(16px);
+transition:.45s;
+position:relative;
+overflow:hidden;
+}
+.btn:hover{
+transform:translateY(-4px);
+border-color:#84958a;
+}
+.btn::after{
+content:"";
+position:absolute;
+left:-120%;
+top:0;
+width:120%;
+height:100%;
+background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);
+transition:.6s;
+}
+.btn:hover::after{
+left:120%;
+}
+.hero-orbit{
+position:absolute;
+right:-10vw;
+top:8vh;
+width:55vw;
+height:55vw;
+border-radius:50%;
+border:1px solid rgba(150,160,152,.08);
+transform:rotate(var(--rot));
+transition:transform .2s linear;
+}
+.hero-orbit::before,
+.hero-orbit::after{
+content:"";
+position:absolute;
+border-radius:50%;
+border:1px solid rgba(150,160,152,.05);
+inset:14%;
+}
+.hero-orbit::after{
+inset:28%;
+}
+.scroll{
+position:absolute;
+left:8vw;
+bottom:40px;
+font-size:12px;
+letter-spacing:.18em;
+color:#8f887d;
+}
+.title{
+font-size:48px;
+margin-bottom:22px;
+font-weight:500;
+}
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:28px;
+margin-top:44px;
+}
+.card{
+background:rgba(255,255,255,.03);
+border:1px solid rgba(255,255,255,.05);
+padding:30px;
+border-radius:30px;
+backdrop-filter:blur(18px);
+transition:.5s;
+opacity:0;
+transform:translateY(60px);
+}
+.card.visible{
+opacity:1;
+transform:translateY(0);
+}
+.card:hover{
+transform:translateY(-10px);
+border-color:rgba(132,149,138,.35);
+box-shadow:0 20px 60px rgba(0,0,0,.22);
+}
+.card h3{
+font-size:24px;
+margin-bottom:14px;
+}
+.card p{
+line-height:1.9;
+color:#b8afa3;
+}
+.quote{
+font-size:42px;
+line-height:1.6;
+max-width:1000px;
+opacity:0;
+transform:translateY(60px);
+transition:1s;
+}
+.quote.visible{
+opacity:1;
+transform:translateY(0);
+}
+@media(max-width:900px){
+.grid{grid-template-columns:1fr}
+h1{font-size:70px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<nav>
+<div class="brand">CLANCY / MOTION LAB</div>
+<div class="brand">AI · 产品 · 创意系统</div>
+</nav>
+
+<section class="hero">
+<div class="hero-orbit" id="orbit"></div>
+
+<div class="hero-inner">
+<div class="eyebrow">EDITORIAL MOTION / HTML DEMO V3</div>
+
+<h1>
+用 AI 与产品<br>
+创造真实的<br>
+影响力
+</h1>
+
+<div class="sub">
+AI 产品探索者、创意系统构建者与长期主义实践者。<br>
+一个关于智能系统、产品设计与未来工作流的空间。
+</div>
+
+<div class="cta">
+<a href="#works" class="btn">探索项目</a>
+<a href="#thought" class="btn">了解理念</a>
+</div>
+</div>
+
+<div class="scroll">SCROLL / 向下探索</div>
+</section>
+
+<section id="works">
+<div class="title">精选项目</div>
+<div class="grid">
+<div class="card"><h3>FitCheck</h3><p>真实空间下的 AI 体验与状态机系统。</p></div>
+<div class="card"><h3>Zero‑to‑One</h3><p>0 到 1 产品探索与 AI workflow 设计。</p></div>
+<div class="card"><h3>AI Trend Radar</h3><p>AI 热点与产业信号自动化情报系统。</p></div>
+</div>
+</section>
+
+<section id="thought">
+<div class="quote" id="quote">
+“真正高级的智能体验，应该像空气与光线一样自然存在。”
+</div>
+</section>
+
+<script>
+const canvas=document.getElementById('bg');
+const ctx=canvas.getContext('2d');
+let w,h,mouse={x:0,y:0},particles=[];
+function resize(){
+w=canvas.width=innerWidth;
+h=canvas.height=innerHeight;
+}
+resize();
+addEventListener('resize',resize);
+
+addEventListener('mousemove',e=>{
+mouse.x=e.clientX;
+mouse.y=e.clientY;
+});
+
+for(let i=0;i<160;i++){
+particles.push({
+x:Math.random()*w,
+y:Math.random()*h,
+r:Math.random()*2+.4,
+dx:(Math.random()-.5)*.5,
+dy:(Math.random()-.5)*.5
+})
+}
+
+function draw(){
+ctx.clearRect(0,0,w,h);
+
+particles.forEach(p=>{
+let d=Math.hypot(mouse.x-p.x,mouse.y-p.y);
+
+if(d<180){
+p.x+=(mouse.x-p.x)*0.0018;
+p.y+=(mouse.y-p.y)*0.0018;
+}
+
+p.x+=p.dx;
+p.y+=p.dy;
+
+if(p.x<0||p.x>w)p.dx*=-1;
+if(p.y<0||p.y>h)p.dy*=-1;
+
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fillStyle='rgba(190,200,194,.24)';
+ctx.fill();
+
+if(d<140){
+ctx.beginPath();
+ctx.arc(p.x,p.y,18,0,Math.PI*2);
+ctx.strokeStyle='rgba(160,176,166,.04)';
+ctx.stroke();
+}
+});
+
+for(let i=0;i<particles.length;i++){
+for(let j=i+1;j<particles.length;j++){
+let a=particles[i],b=particles[j];
+let dist=Math.hypot(a.x-b.x,a.y-b.y);
+if(dist<110){
+ctx.beginPath();
+ctx.moveTo(a.x,a.y);
+ctx.lineTo(b.x,b.y);
+ctx.strokeStyle='rgba(150,160,154,'+(0.12-dist/1300)+')';
+ctx.stroke();
+}
+}
+}
+
+requestAnimationFrame(draw);
+}
+draw();
+
+const obs=new IntersectionObserver(entries=>{
+entries.forEach(e=>{
+if(e.isIntersecting)e.target.classList.add('visible')
+})
+},{threshold:.18})
+
+document.querySelectorAll('.card,#quote').forEach(el=>obs.observe(el));
+
+addEventListener('scroll',()=>{
+let y=scrollY;
+document.documentElement.style.setProperty('--rot', y*0.06+'deg');
+document.querySelector('.hero-inner').style.transform='translateY('+(y*0.10)+'px)';
+})
+</script>
+
+</body>
+</html>
