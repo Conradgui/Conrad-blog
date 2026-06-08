@@ -47,8 +47,8 @@ export default function ContactSection() {
             </GlassButton>
           </div>
 
-          <div className="text-xs text-text-muted">
-            直接联系邮箱：<span className="select-all font-mono text-accent-sage">{contact.email}</span>
+          <div className="text-sm sm:text-base text-text-secondary mt-2">
+            直接联系邮箱：<span className="select-all font-mono font-medium text-text-primary hover:text-accent-sage transition-colors duration-300 border-b border-white/10 pb-0.5">{contact.email}</span>
           </div>
         </motion.div>
 

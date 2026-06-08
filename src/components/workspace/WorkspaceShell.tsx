@@ -17,7 +17,14 @@ import ResumeApp from "@/components/apps/ResumeApp";
 import ContactApp from "@/components/apps/ContactApp";
 
 export default function WorkspaceShell() {
-  const { activeApp, commandPaletteOpen, setCommandPaletteOpen } = useWorkspaceStore();
+  const { activeApp, activeItemId, commandPaletteOpen, setCommandPaletteOpen } = useWorkspaceStore();
+
+  // Reset scroll position to top when changing applications or detail items
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+    }
+  }, [activeApp, activeItemId]);
 
   // Listen to keyboard shortcuts for command palette (⌘K / Ctrl+K / /)
   useEffect(() => {
