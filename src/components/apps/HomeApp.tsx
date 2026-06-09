@@ -15,7 +15,7 @@ export default function HomeApp() {
           工作台主页 / Workspace Home
         </h1>
         <p className="mt-3 text-base text-text-secondary font-light max-w-2xl leading-relaxed">
-          欢迎进入 Clancy 的数字工作室。这里不是展示静态简历的货架，而是一个正在运行的个人系统。您可以通过快捷操作或下方 Dock 探索各个模块。
+          欢迎进入 Conrad 的数字工作室。这里不是展示静态简历的货架，而是一个正在运行的个人系统。您可以通过快捷操作或下方 Dock 探索各个模块。
         </p>
       </div>
 
@@ -30,7 +30,7 @@ export default function HomeApp() {
             </h3>
             <p className="text-base font-semibold text-[#ece7df]">Personal Portfolio OS</p>
             <p className="text-sm text-text-secondary mt-2 leading-relaxed">
-              重构个人工作台，实现内容与视觉系统的解耦，建立完全受控的单页容器应用状态。
+              重构个人工作台，实现内容与视觉系统的解耦，建立完全受控 of 单页容器应用状态。
             </p>
           </div>
 

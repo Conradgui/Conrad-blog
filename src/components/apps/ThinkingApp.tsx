@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React, { useState } from "react";
 import { useWorkspaceStore } from "@/store/workspace.store";
@@ -14,14 +15,8 @@ export default function ThinkingApp() {
     activeItemId === "notes" || noteItems.some((n) => n.id === activeItemId) ? "notes" : "methodology"
   );
   const [searchQuery, setSearchQuery] = useState("");
-
-  React.useEffect(() => {
-    if (activeItemId === "notes" || noteItems.some((n) => n.id === activeItemId)) {
-      setActiveTab("notes");
-    } else {
-      setActiveTab("methodology");
-    }
-  }, [activeItemId]);
+  const resolvedActiveTab =
+    activeItemId === "notes" || noteItems.some((n) => n.id === activeItemId) ? "notes" : activeTab;
 
   // Filter notes based on query
   const filteredNotes = noteItems.filter((note) => {
@@ -82,12 +77,12 @@ export default function ThinkingApp() {
           <div className="prose prose-invert w-full text-base text-text-secondary leading-relaxed mt-6 flex flex-col gap-5">
             <ReactMarkdown
               components={{
-                h3: ({ node, ...props }) => (
+                h3: ({ node: _node, ...props }) => (
                   <h3 className="text-xl font-semibold text-[#ece7df] mt-8 mb-4 border-l-2 border-accent-sage/60 pl-4" {...props} />
                 ),
-                p: ({ node, ...props }) => <p className="mb-4" {...props} />,
-                li: ({ node, ...props }) => <li className="list-disc list-inside mb-2.5 pl-2" {...props} />,
-                blockquote: ({ node, ...props }) => (
+                p: ({ node: _node, ...props }) => <p className="mb-4" {...props} />,
+                li: ({ node: _node, ...props }) => <li className="list-disc list-inside mb-2.5 pl-2" {...props} />,
+                blockquote: ({ node: _node, ...props }) => (
                   <blockquote className="border-l-2 border-white/15 pl-4 py-2 my-4 italic text-text-muted bg-white/[0.01] rounded-r-md" {...props} />
                 ),
               }}
@@ -154,18 +149,18 @@ export default function ThinkingApp() {
           <div className="prose prose-invert w-full text-base text-text-secondary leading-relaxed mt-6 flex flex-col gap-5">
             <ReactMarkdown
               components={{
-                h3: ({ node, ...props }) => (
+                h3: ({ node: _node, ...props }) => (
                   <h3 className="text-xl font-semibold text-[#ece7df] mt-8 mb-4 border-l-2 border-accent-sage/60 pl-4" {...props} />
                 ),
-                p: ({ node, ...props }) => <p className="mb-4" {...props} />,
-                li: ({ node, ...props }) => <li className="list-disc list-inside mb-2.5 pl-2" {...props} />,
-                blockquote: ({ node, ...props }) => (
+                p: ({ node: _node, ...props }) => <p className="mb-4" {...props} />,
+                li: ({ node: _node, ...props }) => <li className="list-disc list-inside mb-2.5 pl-2" {...props} />,
+                blockquote: ({ node: _node, ...props }) => (
                   <blockquote className="border-l-2 border-white/15 pl-4 py-2 my-4 italic text-text-muted bg-white/[0.01] rounded-r-md" {...props} />
                 ),
-                code: ({ node, ...props }) => (
+                code: ({ node: _node, ...props }) => (
                   <code className="bg-white/5 px-1.5 py-0.5 rounded text-accent-sage font-mono text-xs border border-white/10" {...props} />
                 ),
-                pre: ({ node, ...props }) => (
+                pre: ({ node: _node, ...props }) => (
                   <pre className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 overflow-x-auto font-mono text-sm text-[#ece7df] leading-relaxed my-4" {...props} />
                 ),
               }}
@@ -201,11 +196,11 @@ export default function ThinkingApp() {
         <button
           onClick={() => setActiveTab("methodology")}
           className={`pb-3 text-sm tracking-wider font-semibold uppercase relative transition-all duration-300 cursor-pointer focus:outline-none ${
-            activeTab === "methodology" ? "text-accent-sage" : "text-text-muted hover:text-[#ece7df]"
+            resolvedActiveTab === "methodology" ? "text-accent-sage" : "text-text-muted hover:text-[#ece7df]"
           }`}
         >
           <span>核心方法模型 / System Thinking</span>
-          {activeTab === "methodology" && (
+          {resolvedActiveTab === "methodology" && (
             <motion.div
               layoutId="thinkingActiveTab"
               className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent-sage"
@@ -216,11 +211,11 @@ export default function ThinkingApp() {
         <button
           onClick={() => setActiveTab("notes")}
           className={`pb-3 text-sm tracking-wider font-semibold uppercase relative transition-all duration-300 cursor-pointer focus:outline-none ${
-            activeTab === "notes" ? "text-accent-sage" : "text-text-muted hover:text-[#ece7df]"
+            resolvedActiveTab === "notes" ? "text-accent-sage" : "text-text-muted hover:text-[#ece7df]"
           }`}
         >
           <span>研究随笔 / Research Notes</span>
-          {activeTab === "notes" && (
+          {resolvedActiveTab === "notes" && (
             <motion.div
               layoutId="thinkingActiveTab"
               className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent-sage"
@@ -231,7 +226,7 @@ export default function ThinkingApp() {
       </div>
 
       {/* Switcher Display */}
-      {activeTab === "methodology" ? (
+      {resolvedActiveTab === "methodology" ? (
         /* Systems Thinking methodology grid */
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
           {thinkingItems.map((item) => (

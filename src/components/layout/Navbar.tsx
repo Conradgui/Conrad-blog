@@ -2,10 +2,10 @@
 
 import React from "react";
 import { siteConfig } from "@/content/site.config";
-import { useWorkspaceStore, WorkspaceApp } from "@/store/workspace.store";
+import { useWorkspaceStore } from "@/store/workspace.store";
 
 export default function Navbar() {
-  const { openApp, reset } = useWorkspaceStore();
+  const { openApp } = useWorkspaceStore();
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();

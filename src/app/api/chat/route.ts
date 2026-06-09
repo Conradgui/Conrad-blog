@@ -4,6 +4,11 @@ import { profileData } from "@/content/profile";
 import { contact, thinking, writing, projects } from "@/content/site.config";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+type ChatMessage = {
+  role: "user" | "assistant" | string;
+  content: string;
+};
+
 export async function POST(req: Request) {
   try {
     const { messages } = await req.json();
@@ -18,7 +23,7 @@ export async function POST(req: Request) {
       systemInstruction = fs.readFileSync(promptPath, "utf-8");
     } catch (err) {
       console.error("Failed to read system prompt file, using fallback", err);
-      systemInstruction = "You are Clancy's AI Twin. Help users learn about Clancy.";
+      systemInstruction = "You are Conrad's AI portfolio assistant. Help users learn about Conrad's experience, projects, and AI product thinking.";
     }
 
     // Format profile and config data to append to system instruction
@@ -27,7 +32,7 @@ export async function POST(req: Request) {
 
     systemInstruction += `
 
-## Clancy's Database (For reference)
+## Conrad's Database (For reference)
 
 ### Profile Data:
 \`\`\`json
@@ -60,7 +65,7 @@ ${siteConfigText}
 
     // Format chat history for Gemini
     // Gemini history expects role: 'user' | 'model' and parts: [{ text: string }]
-    const geminiHistory = messages.map((m: any) => {
+    const geminiHistory = (messages as ChatMessage[]).map((m) => {
       return {
         role: m.role === "assistant" ? "model" : "user",
         parts: [{ text: m.content }],
@@ -104,8 +109,9 @@ ${siteConfigText}
       },
     });
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("API error:", error);
-    return Response.json({ error: error.message || "Internal Server Error" }, { status: 500 });
+    const message = error instanceof Error ? error.message : "Internal Server Error";
+    return Response.json({ error: message }, { status: 500 });
   }
 }

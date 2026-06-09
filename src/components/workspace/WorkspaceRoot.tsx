@@ -1,7 +1,8 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React, { useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useWorkspaceStore, WorkspaceApp } from "@/store/workspace.store";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -19,9 +20,8 @@ interface WorkspaceRootProps {
   initialRoute?: string[];
 }
 
-export default function WorkspaceRoot({ initialRoute }: WorkspaceRootProps) {
+export default function WorkspaceRoot({ initialRoute: _initialRoute }: WorkspaceRootProps) {
   const pathname = usePathname();
-  const router = useRouter();
   const { mode, activeApp, activeItemId, openApp, reset } = useWorkspaceStore();
 
   // 1. Sync URL path to Zustand workspace store

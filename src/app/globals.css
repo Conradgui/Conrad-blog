@@ -1,24 +1,24 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: #070809;
-  --color-bg-secondary: #0c0d0e;
-  --color-bg-elevated: rgba(255, 255, 255, 0.03);
-  --color-text-primary: #ece7df;
-  --color-text-secondary: #b8afa4;
-  --color-text-muted: #8f887d;
+  --color-bg-primary: #0a0b0d;
+  --color-bg-secondary: #0e1013;
+  --color-bg-elevated: rgba(255, 255, 255, 0.045);
+  --color-text-primary: #f4f3ef;
+  --color-text-secondary: #c5bcaf;
+  --color-text-muted: #9c958a;
   --color-accent-sage: #8ea093;
   --color-accent-sage-soft: rgba(142, 160, 147, 0.16);
   --color-accent-line: rgba(160, 175, 166, 0.16);
-  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-subtle: rgba(255, 255, 255, 0.08);
   --border-active: rgba(142, 160, 147, 0.35);
 
   --font-sans: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "PingFang SC", "HarmonyOS Sans", "Microsoft YaHei", sans-serif;
 }
 
 :root {
-  --background: #070809;
-  --foreground: #ece7df;
+  --background: #0a0b0d;
+  --foreground: #f4f3ef;
   --rot: 0deg;
 }
 
@@ -51,7 +51,7 @@ body::before {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #070809;
+  background: #0a0b0d;
 }
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
@@ -79,15 +79,15 @@ body::before {
 
 /* Glassmorphism utility classes */
 .glass-container {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -96,13 +96,13 @@ body::before {
 .glass-card:hover {
   transform: translateY(-8px) scale(1.01);
   border-color: rgba(142, 160, 147, 0.35);
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
 }
 
 .glass-nav {
-  background: rgba(7, 8, 9, 0.4);
+  background: rgba(10, 11, 13, 0.4);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }

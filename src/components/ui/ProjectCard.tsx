@@ -52,7 +52,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           {project.title}
         </h3>
 
-        {/* Project One-liner */}
         <p className="text-sm text-text-secondary leading-relaxed mb-6 font-normal">
           {project.oneLiner}
         </p>

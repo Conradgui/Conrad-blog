@@ -22,7 +22,10 @@ export default function WorkspaceShell() {
   // Reset scroll position to top when changing applications or detail items
   useEffect(() => {
     if (typeof window !== "undefined") {
-      window.scrollTo(0, 0);
+      const timer = setTimeout(() => {
+        window.scrollTo(0, 0);
+      }, 50);
+      return () => clearTimeout(timer);
     }
   }, [activeApp, activeItemId]);
 

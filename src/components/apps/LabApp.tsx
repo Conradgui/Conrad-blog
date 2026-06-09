@@ -100,14 +100,27 @@ export default function LabApp() {
                 ))}
               </div>
 
-              {/* Continue Build indicator */}
-              <span className="text-xs font-semibold uppercase tracking-wider flex items-center gap-1">
-                {item.continueBuild ? (
-                  <span className="text-accent-sage">● 计划继续孵化</span>
-                ) : (
-                  <span className="text-text-muted">○ 实验已关闭归档</span>
+              {/* Continue Build indicator & Repo Link */}
+              <div className="flex items-center gap-4">
+                {item.repositoryUrl && (
+                  <a
+                    href={item.repositoryUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-xs text-accent-sage hover:text-accent-sage/80 hover:underline flex items-center gap-1 cursor-pointer font-medium transition-all duration-300"
+                  >
+                    <span>GitHub</span>
+                    <span className="text-[10px]">↗</span>
+                  </a>
                 )}
-              </span>
+                <span className="text-xs font-semibold uppercase tracking-wider flex items-center gap-1">
+                  {item.continueBuild ? (
+                    <span className="text-accent-sage">● 计划继续孵化</span>
+                  ) : (
+                    <span className="text-text-muted">○ 实验已关闭归档</span>
+                  )}
+                </span>
+              </div>
             </div>
           </div>
         ))}

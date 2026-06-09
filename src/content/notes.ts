@@ -16,74 +16,174 @@ export interface NoteItem {
 
 export const noteItems: NoteItem[] = [
   {
-    id: "agent-fsm-control",
-    slug: "agent-fsm-control",
-    title: "如何约束 LLM 的输出？浅谈 Agent 架构中的控制流与状态机设计",
-    summary: "详细解析了在 Zero-to-One Product Discovery 中引入 HITL 和 Stage Gate 对 AI 输出进行拦截和修正的实践总结。",
-    type: "research",
-    tags: ["Agent Control", "State Machine", "HITL"],
-    createdAt: "2026-05-12",
-    updatedAt: "2026-05-12",
+    id: "ai-product-discovery-boundary",
+    slug: "ai-product-discovery-boundary",
+    title: "我为什么越来越警惕 AI 直接生成 PRD",
+    summary: "从大模型的“讨好式生成”出发，反思为什么产品发现阶段需要证据门禁、追问和诚实的沉默。",
+    type: "reflection",
+    tags: ["Product Discovery", "Evidence", "AI PM"],
+    createdAt: "2026-06-08",
+    updatedAt: "2026-06-09",
     draft: false,
     relatedProjectIds: ["zero-to-one"],
     contentBody: `
-### 引言：从 Prompt Engeneering 到控制流架构
-早期的智能体研发高度依赖复杂的 Prompt。然而，大模型的随机性极其容易让长会话走向不可预测的黑洞。我们在实践中发现，要实现业务级的稳定产出，系统的核心控制权必须从 **Prompt 侧移交给确定性的代码控制流**。
+最近在使用各种 AI 工具时，我越来越不喜欢一种体验：只要给它一个粗糙想法，它就能立刻吐出一份排版完整、语气笃定、看起来很像真的 PRD。表面上这很高效，实际上很危险。因为早期产品发现里最稀缺的不是文档，而是对问题、用户、场景和约束的诚实澄清。
 
-其中，**有限状态机（Finite State Machine, FSM）** 是最佳的解题思路。
+这也是我做 *Zero-to-One Product Discovery* 时最在意的地方。我没有把它设计成“一键生成 PRD”的工具，而是把输出权限和证据成熟度绑定起来。证据不足时，系统应该暴露 gap，提出 blocking questions，甚至只给 outline，而不是把一堆未经验证的假设包装成 final。
 
-### 为什么选择有限状态机？
-1. **状态明确**：将大模型交互划分为明确的业务状态（如：\`初始化想法\`、\`挑战追问\`、\`大纲生成\`、\`需求终稿\`），状态之间转换逻辑完全受控于代码。
-2. **输入约束**：仅在对应状态下，大模型才被允许调用特定的工具（Tools），极大降低了大模型误调工具的概率。
-3. **安全自愈**：当 Auditor 审查出生成内容格式损坏（如 JSON 截断）时，状态机能快速切入 \`自愈状态\`（Auto-Repair State），向模型追加修复上下文，完成低成本重试。
-
-### 代码级实现策略
-在 Node/TypeScript 体系中，我们可以设计一个轻量状态机类：
-
-\`\`\`typescript
-type State = 'idle' | 'collecting_gaps' | 'generating_outline' | 'finalizing';
-
-interface StateTransition {
-  on: string;
-  target: State;
-  action?: () => Promise<void>;
-}
-\`\`\`
-
-结合大模型流式输出（Streaming），当检测到状态异常时，直接调用中断信号：
-- 不论模型生成进行到哪一步，若触发阻尼关口（Stage Gate），抛出错误并捕获当前快照。
-- 允许用户在中途插入修正参数（Human-In-The-Loop），再从保存的快照处断点续传。
-
-这种控制模式大幅减轻了模型需要“时刻牢记全局逻辑”的认知负担，使其在单个步骤中发挥出最大生成效能。
+我现在更愿意把这种设计称为“诚实的沉默”。一个 AI 产品的优势不只在于它能生成多少内容，也在于它知道什么时候不该替用户下结论。对 AI PM 来说，真正要设计的不是更顺滑的幻觉，而是让不确定性被看见、被追问、被复盘。
 `
   },
   {
-    id: "rag-next-level",
-    slug: "rag-next-level",
-    title: "RAG 系统的下一个阶段：从单纯检索到主动知识推理系统",
-    summary: "探讨如何通过多智能体协作、局部微调以及向量知识库的结构化更新，构建具备长期记忆和高可用推理能力的个人/企业知识系统。",
-    type: "learning",
-    tags: ["RAG", "Knowledge Base", "Vector DB"],
-    createdAt: "2026-04-20",
-    updatedAt: "2026-04-20",
+    id: "positive-friction-in-ai-workflow",
+    slug: "positive-friction-in-ai-workflow",
+    title: "有些 AI 产品应该故意变慢一点",
+    summary: "讨论产品发现工作流里的正向摩擦：好的 AI 不一定总是减少步骤，也可能是在关键节点阻止错误前进。",
+    type: "observation",
+    tags: ["Workflow", "Friction", "Decision Quality"],
+    createdAt: "2026-06-09",
+    updatedAt: "2026-06-09",
+    draft: false,
+    relatedProjectIds: ["zero-to-one"],
+    contentBody: `
+我以前会下意识觉得，AI 产品当然应该更快、更短、更少点击。后来做产品发现类 workflow 时，我开始怀疑这个直觉。因为在一些高不确定任务里，速度不是第一指标，决策质量才是。太快的生成会把用户从“还没想清楚”直接推到“已经有方案了”，中间最关键的怀疑过程反而消失了。
+
+所以我在 *Zero-to-One Product Discovery* 里接受了某种“正向摩擦”：阶段门禁、证据盲区、Auditor 校验、导出限制，这些设计都不是为了让用户爽快，而是为了让用户在关键节点停一下。停顿不是低效，它是在提醒 PM：现在还缺什么证据？这个假设能不能被反驳？下一步是不是应该先访谈，而不是先排期？
+
+我觉得 AI PM 很容易被“减少操作成本”的叙事绑架。但真实产品里，有些摩擦是在保护用户。尤其当 AI 的表达能力强到足以伪装确定性时，产品更需要设计一种温和但坚定的刹车。
+`
+  },
+  {
+    id: "coding-agent-boundary",
+    slug: "coding-agent-boundary",
+    title: "Coding Agent 的价值不只是帮我写代码",
+    summary: "从 RepoHarness 出发，反思 Agent 产品真正难的不是生成代码，而是让过程可控、可恢复、可解释。",
+    type: "research",
+    tags: ["Coding Agent", "Runtime", "Audit"],
+    createdAt: "2026-06-08",
+    updatedAt: "2026-06-09",
+    draft: false,
+    relatedProjectIds: ["repo-harness"],
+    contentBody: `
+作为一个没有传统代码背景的人，我对 Coding Agent 的期待其实很矛盾。一方面，我确实需要它降低工程进入门槛；另一方面，我又非常害怕自己被一堆“看起来能跑”的改动带着走，最后不知道它读了什么、改了什么、为什么这么改。
+
+这也是 *RepoHarness* 对我最有意义的地方。它不是把 Agent 想象成一个无所不能的工程师，而是把它放进一个受控运行环境里：工具调用要留下 trace，权限动作要有边界，长任务要能 checkpoint / resume，记忆写入要经过 review。对我来说，这些不是工程装饰，而是非工程背景用户能否信任 AI 协作的前提。
+
+我越来越觉得，Coding Agent 产品的竞争点不会只停留在“谁更会写代码”。真正重要的是：当任务变长、上下文变乱、工具开始产生副作用时，用户还能不能接管现场。AI 写代码只是起点，让人重新拿回控制权，才是产品价值。
+`
+  },
+  {
+    id: "memory-review-queue-reflection",
+    slug: "memory-review-queue-reflection",
+    title: "我不太相信自动长期记忆",
+    summary: "从 RepoHarness 的 Memory Review Queue 出发，讨论为什么 Agent 记忆必须经过人类确权，而不是自动沉淀。",
+    type: "reflection",
+    tags: ["Memory", "Human Review", "Agent Governance"],
+    createdAt: "2026-06-09",
+    updatedAt: "2026-06-09",
+    draft: false,
+    relatedProjectIds: ["repo-harness"],
+    contentBody: `
+我对 Agent 长期记忆一直有一种本能的不信任。不是因为记忆没用，而是因为“自动记住”听起来太像一个产品陷阱：它可能记住了用户偏好，也可能记住了一次临时妥协、一次错误判断，甚至一次上下文里的误会。短期看它很聪明，长期看它可能把错误变成系统性偏见。
+
+所以在 *RepoHarness* 里，我更愿意把长期记忆设计成 Review Queue，而不是自动写入。Agent 可以提炼候选记忆，但用户需要确认它是否值得持久化。这一步看起来慢，却是在保护未来的上下文质量。因为记忆一旦进入 durable layer，它就不再只是一次回答的材料，而会影响后续很多轮任务的判断。
+
+这件事让我意识到：Agent 产品里的“智能”不能只理解为自动化程度。很多时候，真正成熟的智能是让系统知道哪些东西需要人来盖章。长期记忆不是越多越好，能被审查、能被删除、能被解释，才值得被信任。
+`
+  },
+  {
+    id: "topic-radar-not-summary",
+    slug: "topic-radar-not-summary",
+    title: "AI 信息产品的价值不是摘要",
+    summary: "从 AI Trend Radar 出发，反思信息产品真正要解决的是注意力分配，而不是把新闻压短。",
+    type: "observation",
+    tags: ["AI Information", "Scoring", "Research"],
+    createdAt: "2026-06-08",
+    updatedAt: "2026-06-09",
     draft: false,
     relatedProjectIds: ["ai-trend-radar"],
     contentBody: `
-### 传统 RAG 的局限性
-经典的 Vector RAG（向量相似度检索）正面临严重的瓶颈：
-- **语义割裂**：单纯切片（Chunking）后做相似度比对，容易丢失文档的长上下文逻辑与层次关联。
-- **只懂搜索，不懂推理**：AI 只能把搜出来的碎片拼接并进行汇总，遇到“对比这两项技术的演进路线”等横向推理问题时，生成效果极差。
+我一开始做 *AI Trend Radar* 时，也很容易被“自动摘要”这个方向吸引。毕竟 AI 最擅长把长信息压短，看起来天然适合做资讯产品。但越做我越觉得，摘要只是最低层的能力。对于内容研究者、产品经理或者创作者来说，真正稀缺的不是“今天发生了什么”，而是“我应该把注意力放在哪里”。
 
-### 下一代 RAG 演进方向：主动推理
-要构建具备“系统性思维”的知识系统，我们正在尝试以下方案：
+所以我没有把它做成一个新闻压缩器，而是做成选题判断池。每条候选都要给出 action、reason、evidence、score 和 recommendedTopic。也就是说，系统不只是复述信号，而是要解释为什么这个信号值得写、值得测、值得继续观察，或者为什么它只是噪音。
 
-#### 1. Graph RAG (图谱检索)
-- 利用大模型在离线状态下将原始文档转化为**实体-关系网络（Knowledge Graph）**。
-- 在用户查询时，检索算法不再是单纯比对向量距离，而是顺着关系链进行子图提取，极大还原了长文档内部的信息拓扑结构。
+这背后其实是我对 AI 信息产品的一个偏见：只会总结的信息产品很快会变成同质化内容机器；能帮助用户分配注意力的产品，才更接近决策工具。摘要解决阅读成本，判断解决机会成本，而后者才是我更想做的部分。
+`
+  },
+  {
+    id: "credible-degradation-diary",
+    slug: "credible-degradation-diary",
+    title: "不完整不可怕，伪装完整才可怕",
+    summary: "从 AI Trend Radar 的来源状态设计出发，讨论为什么信息源失败时要透明降级，而不是用顺滑文案掩盖缺口。",
+    type: "project-log",
+    tags: ["Credible Degradation", "Evidence", "Information Product"],
+    createdAt: "2026-06-09",
+    updatedAt: "2026-06-09",
+    draft: false,
+    relatedProjectIds: ["ai-trend-radar"],
+    contentBody: `
+做信息产品时，我最担心的不是系统偶尔抓不到某个来源，而是它抓不到以后还装作一切正常。大模型很擅长补全叙事，尤其在资讯场景里，只要语气足够流畅，用户很难立刻意识到某些源缺席了、某些证据链断了。
 
-#### 2. 自愈式知识写入 (Self-Updating Memory)
-- 当系统在运行自动化情报雷达（如 AI Trend Radar）并写入新数据时，引入 Auditor 执行相似度合并与语义消歧，防止向量空间被雷同的多源新闻污染。
-- 采用 **Memory Controller**，每当有新热点写入，自动在关联的“方法论（Thinking）”卡片中建立关系链，使整个个人知识网实现长期演进与自愈。
+所以 *AI Trend Radar* 里我保留了来源状态：ok、empty、skipped、error。它们看起来不像漂亮功能，却是我认为最重要的可信度接口。当 Telegram、RSS 或其他公开源失败时，系统应该告诉用户“这次判断基于哪些来源，哪些来源没有参与”，而不是继续生成一份完整得过分的趋势报告。
+
+这让我对“可用性”有了更克制的理解。很多产品会把异常藏起来，因为怕打断体验；但在 AI 信息产品里，异常本身就是决策证据的一部分。不完整并不可怕，可怕的是产品把不完整包装成确定性，让用户在错误的安全感里继续行动。
+`
+  },
+  {
+    id: "rag-from-digest-to-query",
+    slug: "rag-from-digest-to-query",
+    title: "我为什么想把日报变成可查询的知识层",
+    summary: "AI Trend Radar RAG 是正在推进的实验：它尝试把持续产生的选题报告沉淀为可追问、可比较、可复用的知识制品。",
+    type: "project-log",
+    tags: ["RAG", "Knowledge Graph", "Product Lab"],
+    createdAt: "2026-06-08",
+    updatedAt: "2026-06-09",
+    draft: false,
+    relatedProjectIds: ["ai-trend-radar-rag"],
+    contentBody: `
+当 *AI Trend Radar* 开始稳定产出日报后，我很快遇到一个新问题：日报本身是线性的，但用户的追问不是线性的。今天看完一条模型发布，明天可能会想知道它和过去哪几次技术路线变化有关；看到一个公司动作，也会想追问它是否连续出现、被哪些来源覆盖、和哪些实体产生了关系。
+
+这就是我继续做 *AI Trend Radar RAG* 的原因。它不是为了给所有文档套一个问答壳，而是尝试把每天产生的选题沉淀成知识制品：实体、事件、来源、主题、证据之间要能被重新组织。Neo4j、ChromaDB、Agentic RAG 这些技术在这里服务的不是炫技，而是让信息从“当天可读”进入“长期可查”。
+
+我现在仍然把它放在实验室，因为它还在验证阶段。但它承接了一个很重要的产品问题：当 AI 信息流持续生产内容时，产品有没有能力把内容变成资产，而不是让它们每天自然过期。
+`
+  },
+  {
+    id: "prompt-compiler-not-chatbot",
+    slug: "prompt-compiler-not-chatbot",
+    title: "Prompt 工具不一定要做成聊天机器人",
+    summary: "从 Prompix 出发，反思为什么 AIGC 创作工具更需要维度控制、格式编译和资产沉淀，而不只是自由对话。",
+    type: "reflection",
+    tags: ["AIGC", "Prompt", "Creator Tools"],
+    createdAt: "2026-06-08",
+    updatedAt: "2026-06-09",
+    draft: false,
+    relatedProjectIds: ["prompix"],
+    contentBody: `
+我对很多 AIGC 工具有一个小小的不满：它们太爱把所有事情都塞进聊天框了。聊天当然灵活，但创作者真正需要的往往不是继续和模型寒暄，而是稳定控制主体、构图、光线、风格、权重，并且知道自己改动了哪一层。
+
+所以 *Prompix* 里我把模型放在“提取器”的位置，而不是让它统治整个创作流程。图片反推后，结果会被拆成维度卡片；用户可以锁定某些卡片，只修改局部视觉要素，再把这些结构化信息编译成 Midjourney 或 Stable Diffusion 能用的 prompt。模型负责理解图片，产品负责控制、组织和输出格式。
+
+这件事让我更相信：AI 产品形态不应该被聊天框绑架。尤其是创作工具，用户追求的不是一次性生成惊喜，而是可重复、可微调、可沉淀的控制感。好的 prompt 工具，与其像聊天机器人，不如像一个视觉语言编译器。
+`
+  },
+  {
+    id: "why-peel-not-ai",
+    slug: "why-peel-not-ai",
+    title: "为什么 Peel 不需要强行 AI 化",
+    summary: "从 Peel 出发，讨论产品判断里的克制：有些用户问题先需要记录、反馈和复盘，而不是自动规划。",
+    type: "reflection",
+    tags: ["Product Judgment", "User Insight", "No AI"],
+    createdAt: "2026-06-08",
+    updatedAt: "2026-06-09",
+    draft: false,
+    relatedProjectIds: ["peel"],
+    contentBody: `
+在现在的作品集语境里，不把大模型写进一个项目里似乎需要一点勇气。但我依然愿意把 *Peel* 放在网站里，因为它提醒我：AI PM 不是把所有问题都 AI 化，而是判断什么时候不该使用 AI。
+
+Peel 解决的是计划失败感。很多时间管理工具让用户早上先规划一天，晚上再面对计划落空后的挫败。如果我给它加一个“AI 智能日程规划”，听起来很酷，但本质上可能只是把用户推向另一个会评价、会催促、会制造压力的黑盒。我更想做的是白天低摩擦记录真实专注，晚上用非批判性的方式回看，第二天再根据过去一段时间的真实状态温和校准计划。
+
+这不是反 AI，而是对用户问题的尊重。有些场景里，用户缺的不是更聪明的安排者，而是一个不评判他的镜子。知道什么时候不用 AI，有时也是更成熟的产品判断。
 `
   }
 ];

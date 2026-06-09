@@ -5,8 +5,17 @@ import { motion } from "framer-motion";
 import { projects } from "@/content/site.config";
 import SectionTitle from "@/components/ui/SectionTitle";
 import ProjectCard from "@/components/ui/ProjectCard";
+import GlassButton from "@/components/ui/GlassButton";
+import { useWorkspaceStore } from "@/store/workspace.store";
+
+const featuredProjectIds = ["zero-to-one", "repo-harness", "ai-trend-radar"];
 
 export default function WorksSection() {
+  const { openApp } = useWorkspaceStore();
+  const featuredProjects = featuredProjectIds
+    .map((id) => projects.find((project) => project.id === id))
+    .filter((project): project is NonNullable<typeof project> => Boolean(project));
+
   const containerVariants = {
     hidden: {},
     visible: {
@@ -30,8 +39,7 @@ export default function WorksSection() {
 
   return (
     <section id="works" className="py-24 sm:py-32 px-6 sm:px-12 md:px-24 max-w-7xl mx-auto relative z-10">
-      {/* Section Header */}
-      <SectionTitle eyebrow="SELECTED PROJECTS" title="精选项目" />
+      <SectionTitle eyebrow="PROJECT PRACTICES" title="项目实践" />
 
       {/* Grid containing project cards */}
       <motion.div
@@ -41,12 +49,26 @@ export default function WorksSection() {
         viewport={{ once: true, margin: "-10%" }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"
       >
-        {projects.map((project) => (
+        {featuredProjects.map((project) => (
           <motion.div key={project.id} variants={itemVariants} className="h-full">
             <ProjectCard project={project} />
           </motion.div>
         ))}
       </motion.div>
+
+      {/* View More Button */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+        className="flex justify-center mt-16"
+      >
+        <GlassButton onClick={() => openApp("projects")} variant="secondary">
+          查看更多项目 / View More
+        </GlassButton>
+      </motion.div>
     </section>
   );
 }
+

@@ -11,14 +11,7 @@ export default function ResumeApp() {
   const [activeTab, setActiveTab] = useState<"resume" | "about">(
     activeItemId === "about" ? "about" : "resume"
   );
-
-  React.useEffect(() => {
-    if (activeItemId === "about") {
-      setActiveTab("about");
-    } else {
-      setActiveTab("resume");
-    }
-  }, [activeItemId]);
+  const resolvedActiveTab = activeItemId === "about" ? "about" : activeTab;
 
   return (
     <div className="flex flex-col gap-8 py-4 text-left leading-relaxed w-full">
@@ -29,7 +22,7 @@ export default function ResumeApp() {
             在线简历 / Resume
           </h1>
           <p className="mt-2 text-sm text-text-secondary print:text-neutral-500">
-            Clancy 的产品工程履历概要，支持直接在线预览或保存为 PDF 归档。
+            Conrad 的 AI 产品经理履历摘要，保留核心经历、能力结构和项目主线。
           </p>
         </div>
 
@@ -47,11 +40,11 @@ export default function ResumeApp() {
         <button
           onClick={() => setActiveTab("resume")}
           className={`pb-3 text-sm tracking-wider font-semibold uppercase relative transition-all duration-300 cursor-pointer focus:outline-none ${
-            activeTab === "resume" ? "text-accent-sage" : "text-text-muted hover:text-[#ece7df]"
+            resolvedActiveTab === "resume" ? "text-accent-sage" : "text-text-muted hover:text-[#ece7df]"
           }`}
         >
           <span>简历摘要 / Resume Summary</span>
-          {activeTab === "resume" && (
+          {resolvedActiveTab === "resume" && (
             <motion.div
               layoutId="resumeActiveTab"
               className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent-sage"
@@ -62,11 +55,11 @@ export default function ResumeApp() {
         <button
           onClick={() => setActiveTab("about")}
           className={`pb-3 text-sm tracking-wider font-semibold uppercase relative transition-all duration-300 cursor-pointer focus:outline-none ${
-            activeTab === "about" ? "text-accent-sage" : "text-text-muted hover:text-[#ece7df]"
+            resolvedActiveTab === "about" ? "text-accent-sage" : "text-text-muted hover:text-[#ece7df]"
           }`}
         >
           <span>关于我 / About Me</span>
-          {activeTab === "about" && (
+          {resolvedActiveTab === "about" && (
             <motion.div
               layoutId="resumeActiveTab"
               className="absolute bottom-0 left-0 right-0 h-[2px] bg-accent-sage"
@@ -79,14 +72,14 @@ export default function ResumeApp() {
       {/* Tab Content Area */}
       <div className="w-full">
         {/* 1. Resume Summary Tab (Forced visible during print) */}
-        <div className={`${activeTab === "resume" ? "block" : "hidden print:block"} flex flex-col gap-8 print:gap-6 print:text-xs`}>
+        <div className={`${resolvedActiveTab === "resume" ? "block" : "hidden print:block"} flex flex-col gap-8 print:gap-6 print:text-xs`}>
           {/* Core Summary */}
           <div className="flex flex-col gap-3">
             <h3 className="text-xs uppercase font-bold tracking-widest text-accent-sage print:text-neutral-800">
               核心摘要 / Professional Summary
             </h3>
             <p className="text-base text-text-secondary leading-relaxed print:text-neutral-800 print:leading-normal">
-              专注于 AI Agent 工作流、状态机控制与数据管道自动化的产品经理与系统工程师。致力于消除语言模型的黑盒随机性，通过 Stage Gate 阻尼和 Controller-Producer-Auditor 设计模式实现高可靠性智能系统。
+              {profileData.resumeSummary}
             </p>
           </div>
 
@@ -123,12 +116,12 @@ export default function ResumeApp() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-white/5 pt-8 print:border-neutral-200 print:pt-6 print:gap-4">
             <div>
               <h3 className="text-xs uppercase font-bold tracking-widest text-accent-sage mb-4 print:text-neutral-800">
-                核心技术栈 / Core Competencies
+                核心能力 / Core Competencies
               </h3>
               <ul className="flex flex-col gap-2.5 text-sm text-text-secondary print:text-neutral-800">
-                <li>• <b>Agent 编排与控制流</b>：Controller-Producer-Auditor 架构, 有限状态机设计</li>
-                <li>• <b>大模型应用</b>：LangChain, Vector RAG (Pinecone / Chroma), Prompt Engineering</li>
-                <li>• <b>技术与框架</b>：Next.js, TypeScript, React Canvas, Tailwind CSS, Zustand</li>
+                {profileData.coreCapabilities.slice(0, 5).map((cap) => (
+                  <li key={cap.name}>• <b>{cap.name}</b>：{cap.description}</li>
+                ))}
               </ul>
             </div>
             <div>
@@ -136,16 +129,16 @@ export default function ResumeApp() {
                 教育经历 / Education
               </h3>
               <div className="flex flex-col gap-1.5 text-sm text-text-secondary print:text-neutral-800">
-                <p className="font-semibold text-[#ece7df] print:text-neutral-900">产品设计与信息系统 学士</p>
-                <p className="text-text-muted print:text-neutral-500">Tech University • 2018 - 2022</p>
-                <p className="text-text-secondary mt-2 print:text-neutral-700">重点研究：信息提取、人机交互与产品工程化发现机制。</p>
+                <p className="font-semibold text-[#ece7df] print:text-neutral-900">{profileData.education.degree}</p>
+                <p className="text-text-muted print:text-neutral-500">{profileData.education.school} • {profileData.education.period}</p>
+                <p className="text-text-secondary mt-2 print:text-neutral-700">{profileData.education.description}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* 2. About Me Tab (Hidden during print) */}
-        <div className={`${activeTab === "about" ? "block" : "hidden"} print:hidden flex flex-col gap-8`}>
+        <div className={`${resolvedActiveTab === "about" ? "block" : "hidden"} print:hidden flex flex-col gap-8`}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Left Column: Vision & Philosophy */}
             <div className="flex flex-col gap-6">
@@ -172,10 +165,19 @@ export default function ResumeApp() {
               {/* How I Work */}
               <div className="glass-card p-6 rounded-2xl border border-white/5 text-left">
                 <h3 className="text-xs uppercase tracking-wider font-semibold text-accent-sage mb-3">
-                  工作方法论 / How I Work
+                  转向 AI 产品 / How I Work
                 </h3>
                 <p className="text-sm text-text-secondary leading-relaxed">
                   {profileData.howIWork}
+                </p>
+              </div>
+
+              <div className="glass-card p-6 rounded-2xl border border-white/5 text-left">
+                <h3 className="text-xs uppercase tracking-wider font-semibold text-accent-sage mb-3">
+                  当前方向 / Direction
+                </h3>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  {profileData.careerDirection}
                 </p>
               </div>
             </div>

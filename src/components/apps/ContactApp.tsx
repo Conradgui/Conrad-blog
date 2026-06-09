@@ -42,7 +42,7 @@ export default function ContactApp() {
             <span className="text-[10px] text-text-muted uppercase tracking-wider font-semibold">
               主要联系邮箱 / Primary Email
             </span>
-            <span className="text-base text-[#ece7df] font-mono select-all">
+            <span className="text-lg sm:text-xl text-[#ece7df] font-mono font-medium select-all">
               {contact.email}
             </span>
           </div>

@@ -14,13 +14,13 @@ export default function ContactSection() {
     <section id="contact" className="py-24 sm:py-32 px-6 sm:px-12 md:px-24 max-w-7xl mx-auto relative z-10 border-t border-white/5 text-left">
       <SectionTitle eyebrow="GET IN TOUCH" title={contact.title} />
 
-      <div className="max-w-3xl mt-8">
+      <div className="max-w-4xl mt-8">
         <motion.p
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-          className="text-base sm:text-lg text-text-secondary leading-relaxed font-light"
+          className="text-base sm:text-lg text-text-secondary leading-relaxed font-light md:whitespace-nowrap"
         >
           {contact.description}
         </motion.p>
@@ -47,8 +47,8 @@ export default function ContactSection() {
             </GlassButton>
           </div>
 
-          <div className="text-sm sm:text-base text-text-secondary mt-2">
-            直接联系邮箱：<span className="select-all font-mono font-medium text-text-primary hover:text-accent-sage transition-colors duration-300 border-b border-white/10 pb-0.5">{contact.email}</span>
+          <div className="text-base sm:text-lg text-text-secondary mt-2">
+            直接联系邮箱：<span className="select-all font-mono font-semibold text-[#ece7df] hover:text-accent-sage transition-colors duration-300 border-b border-white/15 pb-0.5">{contact.email}</span>
           </div>
         </motion.div>
 

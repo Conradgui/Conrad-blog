@@ -3,7 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { thinking } from "@/content/site.config";
-import SectionTitle from "@/components/ui/SectionTitle";
 import QuoteBlock from "@/components/ui/QuoteBlock";
 import { useWorkspaceStore } from "@/store/workspace.store";
 

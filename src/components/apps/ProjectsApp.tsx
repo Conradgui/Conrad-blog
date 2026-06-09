@@ -1,9 +1,9 @@
 "use client";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
 import React, { useState } from "react";
 import { useWorkspaceStore } from "@/store/workspace.store";
 import { projects } from "@/content/site.config";
-import AppIcon from "@/components/ui/AppIcon";
 import { caseStudies } from "@/content/cases";
 import { thinkingItems } from "@/content/thinking";
 import { noteItems } from "@/content/notes";
@@ -172,20 +172,30 @@ export default function ProjectsApp() {
             <div className="prose prose-invert text-base text-text-secondary leading-relaxed flex flex-col gap-5">
               <ReactMarkdown
                 components={{
-                  h3: ({ node, ...props }) => (
-                    <h3 className="text-xl font-semibold text-[#ece7df] mt-8 mb-4 border-l-2 border-accent-sage/60 pl-4" {...props} />
-                  ),
-                  p: ({ node, ...props }) => <p className="mb-4" {...props} />,
-                  li: ({ node, ...props }) => <li className="list-disc list-inside mb-2.5 pl-2" {...props} />,
-                  blockquote: ({ node, ...props }) => (
-                    <blockquote className="border-l-2 border-white/15 pl-4 py-2 my-4 italic text-text-muted bg-white/[0.01] rounded-r-md" {...props} />
-                  ),
-                  code: ({ node, ...props }) => (
-                    <code className="bg-white/5 px-1.5 py-0.5 rounded text-accent-sage font-mono text-xs border border-white/10" {...props} />
-                  ),
-                  pre: ({ node, ...props }) => (
-                    <pre className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 overflow-x-auto font-mono text-sm text-[#ece7df] leading-relaxed my-4" {...props} />
-                  ),
+                  h3: (props) => {
+                    const { node: _node, ...rest } = props;
+                    return <h3 className="text-xl font-semibold text-[#ece7df] mt-8 mb-4 border-l-2 border-accent-sage/60 pl-4" {...rest} />;
+                  },
+                  p: (props) => {
+                    const { node: _node, ...rest } = props;
+                    return <p className="mb-4" {...rest} />;
+                  },
+                  li: (props) => {
+                    const { node: _node, ...rest } = props;
+                    return <li className="list-disc list-inside mb-2.5 pl-2" {...rest} />;
+                  },
+                  blockquote: (props) => {
+                    const { node: _node, ...rest } = props;
+                    return <blockquote className="border-l-2 border-white/15 pl-4 py-2 my-4 italic text-text-muted bg-white/[0.01] rounded-r-md" {...rest} />;
+                  },
+                  code: (props) => {
+                    const { node: _node, ...rest } = props;
+                    return <code className="bg-white/5 px-1.5 py-0.5 rounded text-accent-sage font-mono text-xs border border-white/10" {...rest} />;
+                  },
+                  pre: (props) => {
+                    const { node: _node, ...rest } = props;
+                    return <pre className="bg-white/[0.02] border border-white/5 rounded-2xl p-5 overflow-x-auto font-mono text-sm text-[#ece7df] leading-relaxed my-4" {...rest} />;
+                  },
                 }}
               >
                 {project.contentBody}
@@ -311,38 +321,6 @@ export default function ProjectsApp() {
       {/* Switcher Display */}
       {activeTab === "library" ? (
         <div className="flex flex-col gap-10">
-          {/* Active Builds */}
-          <div className="flex flex-col gap-4">
-            <h3 className="text-[10px] uppercase font-bold tracking-[0.25em] text-accent-sage/80 pb-2 border-b border-white/5">
-              持续迭代与构建项目 / Active Builds
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
-              {buildingProjects.map((proj) => (
-                <button
-                  key={proj.id}
-                  onClick={() => openApp("projects", proj.id)}
-                  className="glass-card p-6 rounded-2xl border border-white/5 text-left flex flex-col justify-between hover:border-accent-sage/35 transition-all duration-300 focus:outline-none cursor-pointer"
-                >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-[9px] font-semibold tracking-widest text-text-muted uppercase">
-                        {proj.category}
-                      </span>
-                      <span className="text-[9px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                        {proj.status === "prototype" ? "原型" : "研究"}
-                      </span>
-                    </div>
-                    <h4 className="text-xl font-semibold text-[#ece7df] mb-2">{proj.title}</h4>
-                    <p className="text-sm text-text-secondary leading-relaxed">{proj.oneLiner}</p>
-                  </div>
-                  <span className="text-xs text-accent-sage font-medium mt-6 inline-flex items-center gap-1">
-                    探索详情 <span>→</span>
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-
           {/* Shipped Projects */}
           {matureProjects.length > 0 && (
             <div className="flex flex-col gap-4">
@@ -376,6 +354,38 @@ export default function ProjectsApp() {
               </div>
             </div>
           )}
+
+          {/* Active Builds */}
+          <div className="flex flex-col gap-4">
+            <h3 className="text-[10px] uppercase font-bold tracking-[0.25em] text-accent-sage/80 pb-2 border-b border-white/5">
+              持续迭代与构建项目 / Active Builds
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
+              {buildingProjects.map((proj) => (
+                <button
+                  key={proj.id}
+                  onClick={() => openApp("projects", proj.id)}
+                  className="glass-card p-6 rounded-2xl border border-white/5 text-left flex flex-col justify-between hover:border-accent-sage/35 transition-all duration-300 focus:outline-none cursor-pointer"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-[9px] font-semibold tracking-widest text-text-muted uppercase">
+                        {proj.category}
+                      </span>
+                      <span className="text-[9px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                        {proj.status === "prototype" ? "原型" : proj.status === "building" ? "构建中" : "研究"}
+                      </span>
+                    </div>
+                    <h4 className="text-xl font-semibold text-[#ece7df] mb-2">{proj.title}</h4>
+                    <p className="text-sm text-text-secondary leading-relaxed">{proj.oneLiner}</p>
+                  </div>
+                  <span className="text-xs text-accent-sage font-medium mt-6 inline-flex items-center gap-1">
+                    探索详情 <span>→</span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       ) : (
         /* Case Studies Tab view */
