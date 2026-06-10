@@ -31,7 +31,7 @@ export default function WritingSection() {
               <h3 className="text-lg sm:text-xl font-medium text-[#ece7df] group-hover:text-accent-sage transition-colors duration-300">
                 {note.title}
               </h3>
-              <p className="text-sm text-text-secondary leading-relaxed font-light mt-3">
+              <p className="text-sm text-text-secondary leading-relaxed font-normal mt-3">
                 {note.summary}
               </p>
             </div>

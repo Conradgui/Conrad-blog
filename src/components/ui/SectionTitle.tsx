@@ -22,7 +22,7 @@ export default function SectionTitle({
         {title}
       </h2>
       {subtitle && (
-        <p className="text-base sm:text-lg text-text-secondary leading-relaxed font-light mt-2">
+        <p className="text-base sm:text-lg text-text-secondary leading-relaxed font-normal mt-2">
           {subtitle}
         </p>
       )}

@@ -20,7 +20,7 @@ export default function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-          className="text-base sm:text-lg text-text-secondary leading-relaxed font-light md:whitespace-nowrap"
+          className="text-base sm:text-lg text-text-secondary leading-relaxed font-normal md:whitespace-nowrap"
         >
           {contact.description}
         </motion.p>

@@ -78,7 +78,7 @@ export default function ThinkingSection() {
             <h3 className="text-xl font-semibold text-[#ece7df] mb-4">
               {phil.title}
             </h3>
-            <p className="text-sm text-text-secondary leading-relaxed font-light">
+            <p className="text-sm text-text-secondary leading-relaxed font-normal">
               {phil.content}
             </p>
           </motion.div>

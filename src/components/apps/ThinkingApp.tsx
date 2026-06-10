@@ -6,6 +6,7 @@ import { useWorkspaceStore } from "@/store/workspace.store";
 import { thinkingItems } from "@/content/thinking";
 import { noteItems } from "@/content/notes";
 import { projects } from "@/content/site.config";
+import { labItems } from "@/content/lab";
 import ReactMarkdown from "react-markdown";
 import { motion } from "framer-motion";
 
@@ -38,6 +39,8 @@ export default function ThinkingApp() {
     // 1. Render Methodology Framework details
     if (thinkingItem) {
       const relatedProjects = projects.filter((p) => thinkingItem.relatedProjectIds?.includes(p.id));
+      const relatedLabs = labItems.filter((l) => thinkingItem.relatedProjectIds?.includes(l.id));
+      const hasRelated = relatedProjects.length > 0 || relatedLabs.length > 0;
       return (
         <div className="text-left py-4 flex flex-col gap-6">
           {/* Header */}
@@ -54,12 +57,12 @@ export default function ThinkingApp() {
           </div>
 
           {/* Related Projects */}
-          {relatedProjects.length > 0 && (
+          {hasRelated && (
             <div className="flex flex-wrap items-center gap-3 border-y border-white/5 py-4 my-2">
               <span className="text-[10px] text-text-muted uppercase tracking-wider font-semibold">
                 应用项目 / Projects
               </span>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 {relatedProjects.map((p) => (
                   <button
                     key={p.id}
@@ -67,6 +70,15 @@ export default function ThinkingApp() {
                     className="text-xs text-accent-sage hover:text-[#ece7df] border border-accent-sage/20 bg-accent-sage/5 px-2.5 py-1 rounded-full transition-colors duration-300 cursor-pointer focus:outline-none"
                   >
                     {p.title}
+                  </button>
+                ))}
+                {relatedLabs.map((l) => (
+                  <button
+                    key={l.id}
+                    onClick={() => openApp("lab")}
+                    className="text-xs text-accent-sage hover:text-[#ece7df] border border-accent-sage/20 bg-accent-sage/5 px-2.5 py-1 rounded-full transition-colors duration-300 cursor-pointer focus:outline-none"
+                  >
+                    {l.title.split("｜")[0]} (实验室)
                   </button>
                 ))}
               </div>
@@ -97,6 +109,8 @@ export default function ThinkingApp() {
     // 2. Render Note/Insight details
     if (noteItem) {
       const relatedProjects = projects.filter((p) => noteItem.relatedProjectIds?.includes(p.id));
+      const relatedLabs = labItems.filter((l) => noteItem.relatedProjectIds?.includes(l.id));
+      const hasRelated = relatedProjects.length > 0 || relatedLabs.length > 0;
       return (
         <div className="text-left py-4 flex flex-col gap-6">
           {/* Detail Header */}
@@ -126,12 +140,12 @@ export default function ThinkingApp() {
           </div>
 
           {/* Related Projects */}
-          {relatedProjects.length > 0 && (
+          {hasRelated && (
             <div className="flex flex-wrap items-center gap-3 border-y border-white/5 py-4 my-2">
               <span className="text-[10px] text-text-muted uppercase tracking-wider font-semibold">
                 应用项目 / Projects
               </span>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 {relatedProjects.map((p) => (
                   <button
                     key={p.id}
@@ -139,6 +153,15 @@ export default function ThinkingApp() {
                     className="text-xs text-accent-sage hover:text-[#ece7df] border border-accent-sage/20 bg-accent-sage/5 px-2.5 py-1 rounded-full transition-colors duration-300 cursor-pointer focus:outline-none"
                   >
                     {p.title}
+                  </button>
+                ))}
+                {relatedLabs.map((l) => (
+                  <button
+                    key={l.id}
+                    onClick={() => openApp("lab")}
+                    className="text-xs text-accent-sage hover:text-[#ece7df] border border-accent-sage/20 bg-accent-sage/5 px-2.5 py-1 rounded-full transition-colors duration-300 cursor-pointer focus:outline-none"
+                  >
+                    {l.title.split("｜")[0]} (实验室)
                   </button>
                 ))}
               </div>

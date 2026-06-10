@@ -14,7 +14,7 @@ export default function HomeApp() {
         <h1 className="text-3xl sm:text-4xl font-medium tracking-tight text-[#ece7df]">
           工作台主页 / Workspace Home
         </h1>
-        <p className="mt-3 text-base text-text-secondary font-light max-w-2xl leading-relaxed">
+        <p className="mt-3 text-base text-text-secondary font-normal max-w-2xl leading-relaxed">
           欢迎进入 Conrad 的数字工作室。这里不是展示静态简历的货架，而是一个正在运行的个人系统。您可以通过快捷操作或下方 Dock 探索各个模块。
         </p>
       </div>
