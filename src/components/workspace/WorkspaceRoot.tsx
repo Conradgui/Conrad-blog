@@ -22,7 +22,18 @@ interface WorkspaceRootProps {
 
 export default function WorkspaceRoot({ initialRoute: _initialRoute }: WorkspaceRootProps) {
   const pathname = usePathname();
-  const { mode, activeApp, activeItemId, openApp, reset } = useWorkspaceStore();
+  const { mode, activeApp, activeItemId, openApp, reset, setPortfolioMode } = useWorkspaceStore();
+
+  // 0. Initialize portfolioMode from URL parameter (e.g. ?mode=general or ?mode=pm)
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      const modeParam = params.get("mode");
+      if (modeParam === "general" || modeParam === "pm") {
+        setPortfolioMode("general");
+      }
+    }
+  }, [setPortfolioMode]);
 
   // 1. Sync URL path to Zustand workspace store
   useEffect(() => {

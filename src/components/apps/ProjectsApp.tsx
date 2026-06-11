@@ -11,11 +11,18 @@ import ReactMarkdown from "react-markdown";
 import { motion } from "framer-motion";
 
 export default function ProjectsApp() {
-  const { activeItemId, openApp } = useWorkspaceStore();
+  const { activeItemId, openApp, portfolioMode } = useWorkspaceStore();
   const [activeTab, setActiveTab] = useState<"library" | "cases">("library");
 
   // Categories based on Maturity Level
   const matureProjects = projects.filter((p) => p.status === "mature" || p.status === "shipped");
+  if (portfolioMode === "general") {
+    const peelIndex = matureProjects.findIndex((p) => p.id === "peel");
+    if (peelIndex > -1) {
+      const [peel] = matureProjects.splice(peelIndex, 1);
+      matureProjects.unshift(peel);
+    }
+  }
   const buildingProjects = projects.filter((p) => p.status && ["building", "prototype", "research"].includes(p.status));
 
   // If an item is selected, render details (either project details or case study details)

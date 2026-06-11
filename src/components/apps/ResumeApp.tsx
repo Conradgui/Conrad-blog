@@ -2,12 +2,13 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { profileData } from "@/content/profile";
+import { profileDatas } from "@/content/profile";
 
 import { useWorkspaceStore } from "@/store/workspace.store";
 
 export default function ResumeApp() {
-  const { activeItemId } = useWorkspaceStore();
+  const { activeItemId, portfolioMode } = useWorkspaceStore();
+  const profileData = profileDatas[portfolioMode];
   const [activeTab, setActiveTab] = useState<"resume" | "about">(
     activeItemId === "about" ? "about" : "resume"
   );
@@ -22,7 +23,9 @@ export default function ResumeApp() {
             在线简历 / Resume
           </h1>
           <p className="mt-2 text-sm text-text-secondary print:text-neutral-500">
-            Conrad 的 AI 产品经理履历摘要，保留核心经历、能力结构和项目主线。
+            {portfolioMode === "ai"
+              ? "Conrad 的 AI 产品经理履历摘要，保留核心经历、能力结构和项目主线。"
+              : "Conrad 的产品经理履历摘要，保留核心经历、能力结构和项目主线。"}
           </p>
         </div>
 

@@ -8,31 +8,59 @@ import { labItems } from "./lab";
 export { profileData, caseStudies, thinkingItems, noteItems, labItems };
 
 // Global configurations
-export const siteConfig = {
-  name: "Conrad",
-  role: "AI 产品与系统设计者",
-  nav: [
-    { label: "首页", href: "#home" },
-    { label: "项目", href: "#works" },
-    { label: "方法", href: "#thinking" },
-    { label: "联系", href: "#contact" }
-  ],
-  hero: {
-    eyebrow: "AI PRODUCT MANAGER",
-    titleLines: ["Designing AI Products", "for Real-World Impact"],
-    description:
-      "Exploring AI, agents, and workflows through product thinking, turning emerging technologies into meaningful value for users and businesses.",
-    primaryCta: { label: "查看项目证据", href: "#works" },
-    secondaryCta: { label: "阅读方法与思考", href: "#thinking" }
+export const siteConfigs = {
+  ai: {
+    name: "Conrad",
+    role: "AI 产品与系统设计者",
+    nav: [
+      { label: "首页", href: "#home" },
+      { label: "项目", href: "#works" },
+      { label: "方法", href: "#thinking" },
+      { label: "联系", href: "#contact" }
+    ],
+    hero: {
+      eyebrow: "AI PRODUCT MANAGER",
+      titleLines: ["Designing AI Products", "for Real-World Impact"],
+      description:
+        "Exploring AI, agents, and workflows through product thinking, turning emerging technologies into meaningful value for users and businesses.",
+      primaryCta: { label: "查看项目证据", href: "#works" },
+      secondaryCta: { label: "阅读方法与思考", href: "#thinking" }
+    },
+    focusAreas: [
+      "AI 产品发现",
+      "AI 评测与验证",
+      "Agent 工作流设计",
+      "工作流边界治理",
+      "AI 信息产品与研究",
+      "商业化与用户洞察"
+    ]
   },
-  focusAreas: [
-    "AI 产品发现",
-    "AI 评测与验证",
-    "Agent 工作流设计",
-    "工作流边界治理",
-    "AI 信息产品与研究",
-    "商业化与用户洞察"
-  ]
+  general: {
+    name: "Conrad",
+    role: "产品经理 / 系统与商业设计者",
+    nav: [
+      { label: "首页", href: "#home" },
+      { label: "项目", href: "#works" },
+      { label: "方法", href: "#thinking" },
+      { label: "联系", href: "#contact" }
+    ],
+    hero: {
+      eyebrow: "PRODUCT MANAGER",
+      titleLines: ["Designing Systems & Growth", "for Business Impact"],
+      description:
+        "Delivering products through systems thinking and data-driven execution. Specialized in complex workflows, monetization, payment funnels, and user-centric solutions.",
+      primaryCta: { label: "查看项目证据", href: "#works" },
+      secondaryCta: { label: "阅读方法与思考", href: "#thinking" }
+    },
+    focusAreas: [
+      "商业化与用户洞察",
+      "转化漏斗与增长驱动",
+      "复杂业务工作流建模",
+      "系统工程与流程落地",
+      "AI 工作流与数智化探索",
+      "项目管理与 WBS 规划"
+    ]
+  }
 };
 
 // Types & Schemas

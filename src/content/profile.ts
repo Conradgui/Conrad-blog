@@ -26,7 +26,7 @@ export interface ProfileData {
   }[];
 }
 
-export const profileData: ProfileData = {
+export const profileDataAI: ProfileData = {
   resumeSummary:
     "具备战略咨询、产品商业化、AI 产品调研与 AI Workflow / Agent System 设计的复合背景。在百度智能云、艾瑞咨询、德勤管理咨询和 36氪的实践中，积累了深厚的用户洞察、PMF 验证、数据归因与转化漏斗优化经验；同时独立构建 RepoHarness、Zero-to-One Product Discovery、AI Trend Radar 等 AI 产品项目，围绕 Agent Runtime、分层上下文管理、记忆治理、Stage Gate 与 AI 评测体系设计，探索人机协同工作流（HITL）的高效可控落地。",
   education: {
@@ -133,3 +133,75 @@ export const profileData: ProfileData = {
     }
   ]
 };
+
+export const profileDataGeneral: ProfileData = {
+  resumeSummary:
+    "具备战略咨询、产品商业化与海外 C 端增长的复合背景。在百度智能云（海外）、艾瑞咨询、德勤管理咨询与 36氪的实践中，积累了深厚的用户调研、PSM 定价、本地化支付漏斗优化（支付损耗从 17% 降至 2.7%）与跨职能团队协作管理经验；同时具备扎实的工程落地能力，独立构建基于 AI 与受控工作流的代码审计、热点信号监控及原型开发工具，探索数智化工作流的高效设计与产品落地。",
+  education: {
+    school: "中央民族大学",
+    degree: "工商管理学｜本科在读",
+    period: "2023.09 - 今",
+    description: "主修管理统计学、运营管理学、消费者行为学、市场营销学、战略管理等课程；当前求职方向为产品经理 / 商业化产品经理。"
+  },
+  whoIAm:
+    "我是 Conrad，一名兼具商业洞察与工程落地能力的产品经理。我专注于以系统思维将用户痛点与业务逻辑转化为可度量、高可控的产品工作流，致力于通过数据驱动的增长手段及数智化工具提升业务效能。",
+  whatICareAbout:
+    "我关注如何通过合理的交互摩擦、沙箱机制和数据闭环来设计高安全、可审计的用户旅程。我选择德勤和艾瑞咨询作为起点，是为了训练严密的商业分析能力，帮助我在设计产品时能够站在商业模式和竞争壁垒的高度去理解用户价值。",
+  howIWork:
+    "我习惯以系统工程思维设计产品。无论是优化百度云收银台支付费率，还是拆解复杂的业务流程，我都会优先梳理状态机关系并搭建数据监控指标，通过精细化项目管理推进高质量交付。",
+  careerDirection:
+    "致力于商业化产品、增长产品及复杂业务工作流（SaaS / ToB）设计，擅长数据分析和工程级原型开发，探索人工智能与传统业务融合的数智化升级机会。",
+  selectedExperience: profileDataAI.selectedExperience,
+  coreCapabilities: [
+    {
+      name: "商业化与增长优化",
+      description:
+        "具备海外 C 端收银台重构、动态备用库存调度、支付漏斗全链路归因与 KOC 社群自动化运营经验。"
+    },
+    {
+      name: "系统化工作流设计",
+      description:
+        "擅长将模糊复杂的业务流程建模为高可控、可审查、防越权的状态机与多节点交付流。"
+    },
+    {
+      name: "数据分析与归因验证",
+      description:
+        "自建数据清洗分析管道，精通 A/B Test 多维交叉归因定位与基于单元测试的产品质量把关。"
+    },
+    {
+      name: "商业分析与竞品研究",
+      description:
+        "深厚咨询背景，主导多项央企数智化转型竞品拆解、核心价值定位及 Roadmap 规划。"
+    },
+    {
+      name: "项目管理与跨团队协作",
+      description:
+        "熟练运用 WBS 拆解甘特图进行平行项目管理、高风险合规评估，保障多职能团队协同交付。"
+    }
+  ],
+  toolsAndMethods: [
+    {
+      category: "数据与商业",
+      items: ["PSM 定价", "A/B Test", "漏斗归因", "WBS 甘特图", "合规评估", "竞品拆解", "用户访谈"]
+    },
+    {
+      category: "系统与流程设计",
+      items: ["Product Discovery", "Stage Gate", "Human-in-the-loop", "状态机设计", "API Mock 契约"]
+    },
+    {
+      category: "AI 工作流与工具",
+      items: ["Tool Calling", "Context Management", "Memory Governance", "Dify", "Codex", "LangGraph"]
+    },
+    {
+      category: "工具与实现",
+      items: ["GitHub Actions", "Python", "TypeScript", "SQL", "TailwindCSS", "Next.js"]
+    }
+  ]
+};
+
+export const profileDatas = {
+  ai: profileDataAI,
+  general: profileDataGeneral
+};
+
+export const profileData = profileDataAI;

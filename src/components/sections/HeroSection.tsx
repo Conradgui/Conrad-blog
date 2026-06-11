@@ -2,11 +2,15 @@
 
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { siteConfig } from "@/content/site.config";
+import { siteConfigs } from "@/content/site.config";
 import GlassButton from "@/components/ui/GlassButton";
 import OrbitLayer from "@/components/motion/OrbitLayer";
+import { useWorkspaceStore } from "@/store/workspace.store";
+
 export default function HeroSection() {
   const containerRef = useRef<HTMLElement>(null);
+  const { portfolioMode } = useWorkspaceStore();
+  const siteConfig = siteConfigs[portfolioMode];
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],

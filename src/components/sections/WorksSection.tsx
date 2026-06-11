@@ -8,10 +8,11 @@ import ProjectCard from "@/components/ui/ProjectCard";
 import GlassButton from "@/components/ui/GlassButton";
 import { useWorkspaceStore } from "@/store/workspace.store";
 
-const featuredProjectIds = ["zero-to-one", "repo-harness", "ai-trend-radar"];
-
 export default function WorksSection() {
-  const { openApp } = useWorkspaceStore();
+  const { openApp, portfolioMode } = useWorkspaceStore();
+  const featuredProjectIds = portfolioMode === "ai"
+    ? ["zero-to-one", "repo-harness", "ai-trend-radar"]
+    : ["peel", "zero-to-one", "repo-harness"];
   const featuredProjects = featuredProjectIds
     .map((id) => projects.find((project) => project.id === id))
     .filter((project): project is NonNullable<typeof project> => Boolean(project));

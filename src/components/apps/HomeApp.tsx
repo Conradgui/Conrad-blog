@@ -5,7 +5,7 @@ import { useWorkspaceStore } from "@/store/workspace.store";
 import AppIcon from "@/components/ui/AppIcon";
 
 export default function HomeApp() {
-  const { openApp } = useWorkspaceStore();
+  const { openApp, portfolioMode } = useWorkspaceStore();
 
   return (
     <div className="flex flex-col gap-10 py-6 text-left">
@@ -52,17 +52,29 @@ export default function HomeApp() {
         <div className="flex flex-col gap-6">
           {/* Featured Project */}
           <div className="border border-white/5 bg-white/[0.01] rounded-2xl p-6 flex flex-col justify-between">
-            <div>
-              <h3 className="text-xs uppercase tracking-wider font-semibold text-accent-sage mb-4">
-                精选作品 / Featured Build
-              </h3>
-              <p className="text-base font-semibold text-[#ece7df]">Zero-to-One Product Discovery</p>
-              <p className="text-sm text-text-secondary mt-2 leading-relaxed">
-                一个用于 AI 辅助产品探索的 workflow 项目。采用 Stage Gate 和 Controller / Producer / Auditor 架构以防止大模型信息缺失时过早产出 PRD 路线图。
-              </p>
-            </div>
+            {portfolioMode === "ai" ? (
+              <div>
+                <h3 className="text-xs uppercase tracking-wider font-semibold text-accent-sage mb-4">
+                  精选作品 / Featured Build
+                </h3>
+                <p className="text-base font-semibold text-[#ece7df]">Zero-to-One Product Discovery</p>
+                <p className="text-sm text-text-secondary mt-2 leading-relaxed">
+                  一个用于 AI 辅助产品探索的 workflow 项目。采用 Stage Gate 和 Controller / Producer / Auditor 架构以防止大模型信息缺失时过早产出 PRD 路线图。
+                </p>
+              </div>
+            ) : (
+              <div>
+                <h3 className="text-xs uppercase tracking-wider font-semibold text-accent-sage mb-4">
+                  精选作品 / Featured Build
+                </h3>
+                <p className="text-base font-semibold text-[#ece7df]">Peel - Reality-First 时间管理</p>
+                <p className="text-sm text-text-secondary mt-2 leading-relaxed">
+                  一款从行为心理与交互减法出发设计的本地优先时间管理产品。核心通过 Now/Today/Reflection 三阶段闭环，校准用户计划并解决计划失败的挫败感。
+                </p>
+              </div>
+            )}
             <button
-              onClick={() => openApp("projects", "zero-to-one")}
+              onClick={() => openApp("projects", portfolioMode === "ai" ? "zero-to-one" : "peel")}
               className="mt-6 self-start text-xs font-semibold tracking-wider text-accent-sage hover:text-[#ece7df] transition-colors duration-300 flex items-center gap-1 cursor-pointer"
             >
               分析此项目 <span>→</span>

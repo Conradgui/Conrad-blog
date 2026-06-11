@@ -1,11 +1,12 @@
 "use client";
 
 import React from "react";
-import { siteConfig } from "@/content/site.config";
+import { siteConfigs } from "@/content/site.config";
 import { useWorkspaceStore } from "@/store/workspace.store";
 
 export default function Navbar() {
-  const { openApp } = useWorkspaceStore();
+  const { openApp, portfolioMode, setPortfolioMode } = useWorkspaceStore();
+  const siteConfig = siteConfigs[portfolioMode];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
@@ -31,13 +32,13 @@ export default function Navbar() {
           •
         </span>
         <span className="text-[9px] sm:text-[10px] text-text-muted tracking-widest uppercase font-light">
-          AI · 产品 · 创意系统
+          {portfolioMode === "ai" ? "AI · 产品 · 创意系统" : "系统 · 增长 · 商业化设计"}
         </span>
       </div>
 
       {/* Navigation & Launch Controls */}
-      <div className="flex items-center gap-4 sm:gap-8">
-        <ul className="flex items-center gap-4 sm:gap-6">
+      <div className="flex items-center gap-3 sm:gap-6">
+        <ul className="flex items-center gap-3 sm:gap-5">
           {siteConfig.nav.map((link) => (
             <li key={link.label}>
               <a
@@ -50,6 +51,32 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
+
+        <div className="h-4 w-[1px] bg-white/10 hidden md:block" />
+
+        {/* Dynamic Mode Switcher */}
+        <div className="relative flex items-center bg-white/[0.03] border border-white/5 rounded-full p-0.5 text-[9px] sm:text-[10px] tracking-wider font-semibold">
+          <button
+            onClick={() => setPortfolioMode("ai")}
+            className={`px-2.5 py-1 rounded-full transition-all duration-300 cursor-pointer ${
+              portfolioMode === "ai"
+                ? "bg-accent-sage/15 text-accent-sage shadow-[0_0_10px_rgba(142,160,147,0.08)] border border-accent-sage/20"
+                : "text-text-muted hover:text-[#ece7df] border border-transparent"
+            }`}
+          >
+            AI<span className="hidden sm:inline"> 极客</span>
+          </button>
+          <button
+            onClick={() => setPortfolioMode("general")}
+            className={`px-2.5 py-1 rounded-full transition-all duration-300 cursor-pointer ${
+              portfolioMode === "general"
+                ? "bg-accent-sage/15 text-accent-sage shadow-[0_0_10px_rgba(142,160,147,0.08)] border border-accent-sage/20"
+                : "text-text-muted hover:text-[#ece7df] border border-transparent"
+            }`}
+          >
+            PM<span className="hidden sm:inline"> 商业</span>
+          </button>
+        </div>
 
         <div className="h-4 w-[1px] bg-white/10 hidden md:block" />
 

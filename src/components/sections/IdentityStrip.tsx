@@ -2,9 +2,12 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { siteConfig } from "@/content/site.config";
+import { siteConfigs } from "@/content/site.config";
+import { useWorkspaceStore } from "@/store/workspace.store";
 
 export default function IdentityStrip() {
+  const { portfolioMode } = useWorkspaceStore();
+  const siteConfig = siteConfigs[portfolioMode];
   return (
     <div className="w-full border-y border-white/5 bg-[#070809]/40 backdrop-blur-xs relative z-10 py-6 px-6 sm:px-12 md:px-24">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">

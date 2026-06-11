@@ -23,9 +23,11 @@ export interface WorkspaceState {
   commandPaletteOpen: boolean;
   searchQuery: string;
   navigationHistory: NavigationEntry[];
+  portfolioMode: "ai" | "general";
   
   // Actions
   setMode: (mode: ExperienceMode) => void;
+  setPortfolioMode: (mode: "ai" | "general") => void;
   openApp: (app: WorkspaceApp, itemId?: string, skipHistory?: boolean) => void;
   closeItem: () => void;
   setCommandPaletteOpen: (open: boolean) => void;
@@ -36,6 +38,7 @@ export interface WorkspaceState {
 
 export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   mode: "arrival",
+  portfolioMode: "ai",
   activeApp: "home",
   activeItemId: undefined,
   commandPaletteOpen: false,
@@ -43,6 +46,7 @@ export const useWorkspaceStore = create<WorkspaceState>((set, get) => ({
   navigationHistory: [],
 
   setMode: (mode) => set({ mode }),
+  setPortfolioMode: (portfolioMode) => set({ portfolioMode }),
   
   openApp: (app, itemId, skipHistory = false) => {
     const { activeApp, activeItemId, navigationHistory } = get();
